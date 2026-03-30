@@ -1,0 +1,137 @@
+# ============================================================
+#  Ghostty — AI CLI 沉浸式开发配置 (Light/Dark 自适应)
+#  适配: Claude Code / Codex CLI / Gemini CLI
+#  跟随系统外观自动切换亮/暗主题
+# ============================================================
+
+
+# ── 自动主题切换 ──────────────────────────────────────────────
+# 核心：跟随 macOS / 桌面环境的 Light/Dark 模式自动切换
+# Dark  → Catppuccin Mocha  (深邃低对比)
+# Light → Catppuccin Latte  (柔和暖白)
+theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+window-theme = auto
+
+
+# ── 字体 ──────────────────────────────────────────────────────
+# JetBrains Mono 连字清晰，长时间阅读 AI 输出不疲劳
+# 备选: "Fira Code", "Cascadia Code", "Monaspace Neon"
+font-family = JetBrains Mono
+font-family-bold = JetBrains Mono Bold
+font-family-italic = JetBrains Mono Italic
+font-size = 14
+font-thicken = true
+adjust-cell-height = 25%
+
+
+# ── 光标 ──────────────────────────────────────────────────────
+cursor-style = block
+cursor-style-blink = false
+selection-invert-fg-bg = true
+
+
+# ── 窗口外观 ──────────────────────────────────────────────────
+# 半透明 + 模糊营造沉浸感，亮暗模式下都好看
+background-opacity = 0.93
+background-blur-radius = 20
+
+window-padding-x = 8
+window-padding-y = 6
+window-padding-balance = true
+window-decoration = true
+
+# 分屏优化：更紧凑的间距，更多可视内容
+window-step-resize = true
+
+
+
+# ── 滚动回溯 ─────────────────────────────────────────────────
+# AI 工具单次输出可达上万行，大幅提升 scrollback
+scrollback-limit = 1000000
+
+
+# ── 剪贴板与粘贴 ──────────────────────────────────────────────
+# AI 工具频繁读写剪贴板，关闭一切确认阻断
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = false
+clipboard-trim-trailing-spaces = true
+copy-on-select = clipboard
+
+
+# ── 鼠标 ──────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+focus-follows-mouse = true
+link-url = true
+
+
+# ── Shell 集成 ────────────────────────────────────────────────
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+
+# ── 性能调优 ──────────────────────────────────────────────────
+bold-is-bright = false
+resize-overlay = never
+confirm-close-surface = false
+
+
+# ── 快捷键：分屏 & 多工作区 ──────────────────────────────────
+
+# 分屏创建（更符合直觉）
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+keybind = super+alt+d=new_split:left
+keybind = super+ctrl+d=new_split:up
+keybind = super+w=close_surface
+
+# 分屏导航（Vim 风格 + 方向键）
+keybind = super+h=goto_split:left
+keybind = super+l=goto_split:right
+keybind = super+k=goto_split:top
+keybind = super+j=goto_split:bottom
+keybind = super+left=goto_split:previous
+keybind = super+right=goto_split:next
+
+# 分屏大小调整（更精细控制）
+keybind = super+ctrl+h=resize_split:left,20
+keybind = super+ctrl+l=resize_split:right,20
+keybind = super+ctrl+k=resize_split:up,20
+keybind = super+ctrl+j=resize_split:down,20
+
+# 等分分屏
+keybind = super+shift+e=equalize_splits
+
+# 全屏 & 聚焦
+keybind = super+shift+enter=toggle_fullscreen
+keybind = super+enter=toggle_split_zoom
+
+# Tab 管理（增强多窗口工作流）
+keybind = super+t=new_tab
+keybind = super+shift+t=new_window
+keybind = super+shift+w=close_tab
+keybind = super+shift+left=previous_tab
+keybind = super+shift+right=next_tab
+keybind = super+1=goto_tab:1
+keybind = super+2=goto_tab:2
+keybind = super+3=goto_tab:3
+keybind = super+4=goto_tab:4
+keybind = super+5=goto_tab:5
+keybind = super+6=goto_tab:6
+keybind = super+7=goto_tab:7
+keybind = super+8=goto_tab:8
+keybind = super+9=goto_tab:9
+
+# 快速翻页（阅读 AI 长输出）
+keybind = super+shift+k=scroll_page_up
+keybind = super+shift+j=scroll_page_down
+keybind = super+shift+u=scroll_to_top
+keybind = super+shift+i=scroll_to_bottom
+
+# 字号调整
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+0=reset_font_size
+
+# 快速清屏
+keybind = super+k=clear_screen

@@ -41,6 +41,21 @@
 - 提交 commit 前确认没有引入 lint 错误或测试失败
 - 不要擅自修改 .env 文件或提交敏感信息
 
+## 自主操作授权
+
+- 在工作目录内，你可以自主执行以下操作而无需每次确认：
+  - 创建、修改、删除代码文件（.js/.ts/.py/.go 等）
+  - 运行测试命令（npm test, pytest 等）
+  - 执行构建命令（npm run build, make 等）
+  - 安装依赖包（npm install, pip install 等）
+  - 创建 git commit（但 push 前需确认）
+  - 运行 lint 和格式化工具
+- 以下操作仍需确认：
+  - 删除整个目录或多个文件
+  - 执行 git push、force push、reset --hard 等破坏性 git 操作
+  - 修改系统配置或环境变量文件
+  - 执行可能影响生产环境的操作
+
 ## 绝对禁止
 
 - 禁止在回复中编造数据或虚构 API 响应

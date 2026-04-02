@@ -7,9 +7,9 @@
 
 # ── 自动主题切换 ──────────────────────────────────────────────
 # 核心：跟随 macOS / 桌面环境的 Light/Dark 模式自动切换
-# Dark  → Catppuccin Mocha  (深邃低对比)
-# Light → Catppuccin Latte  (柔和暖白)
-theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+# Dark  → GitHub Dark
+# Light → GitHub Light
+theme = dark:GitHub Dark,light:GitHub Light
 window-theme = auto
 
 

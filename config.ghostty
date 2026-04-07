@@ -7,21 +7,19 @@
 
 # ── 自动主题切换 ──────────────────────────────────────────────
 # 核心：跟随 macOS / 桌面环境的 Light/Dark 模式自动切换
-# Dark  → GitHub Dark
-# Light → GitHub Light
-theme = dark:GitHub Dark,light:GitHub Light
+# Dark  → GitHub Dark Default
+# Light → GitHub Light Default
+theme = dark:GitHub Dark Default,light:GitHub Light Default
 window-theme = auto
 
 
 # ── 字体 ──────────────────────────────────────────────────────
-# JetBrains Mono 连字清晰，长时间阅读 AI 输出不疲劳
+# JetBrainsMono Nerd Font 连字清晰，长时间阅读 AI 输出不疲劳
 # 备选: "Fira Code", "Cascadia Code", "Monaspace Neon"
-font-family = JetBrains Mono
-font-family-bold = JetBrains Mono Bold
-font-family-italic = JetBrains Mono Italic
+font-family = JetBrainsMono Nerd Font
 font-size = 14
 font-thicken = true
-adjust-cell-height = 25%
+adjust-cell-height = 35%
 
 
 # ── 光标 ──────────────────────────────────────────────────────

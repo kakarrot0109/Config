@@ -13,13 +13,13 @@
 [![Palette](https://img.shields.io/badge/palette-warm_ivory_+_amber-b7791f)](https://github.com/kakarrot-dev/claude-cream)
 [![Mode](https://img.shields.io/badge/mode-light_+_dark-2d2e2d)](https://github.com/kakarrot-dev/claude-cream)
 [![Font](https://img.shields.io/badge/font-PingFang_SC_+_JetBrains_Mono-3d3d3a)](https://github.com/kakarrot-dev/claude-cream)
-[![Themes](https://img.shields.io/badge/themes-8_families-dccebf)](#whats-inside)
+[![Themes](https://img.shields.io/badge/themes-10_families-dccebf)](#whats-inside)
 [![Codex](https://img.shields.io/badge/Codex-light_+_dark-e6bf7a)](themes/codex/README.md)
 [![License](https://img.shields.io/badge/license-MIT-b7791f)](./LICENSE)
 
 [中文版](README.zh-CN.md)
 
-A warm editorial theme library for Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, websites, and reusable illustration generation.
+A warm editorial theme library for Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, OpenCode, Neovim, websites, and reusable illustration generation.
 
 Inspired by the [Claude.com](https://claude.com) visual language: layered warm surfaces, restrained amber accents, and a typographic sensibility that makes code feel editorial rather than industrial.
 
@@ -31,7 +31,7 @@ Inspired by the [Claude.com](https://claude.com) visual language: layered warm s
 - **Amber accent** `#b7791f` — restrained, warm, and clear in interactive states
 - **Warm charcoal dark canvas** `#2d2e2d` — depth without a hard black backdrop
 - **Chinese-first typography** — PingFang SC system font for prose, JetBrains Mono for code
-- **One visual language, eight theme assets** — Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, Website, and Image Generation
+- **One visual language, ten theme assets** — Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, OpenCode, Neovim, Website, and Image Generation
 
 ## Interface Preview
 
@@ -72,6 +72,8 @@ claude-cream/
 │   ├── ghostty/             # Terminal palettes + Ghostty config
 │   ├── vscode/              # Five Cursor / VS Code themes
 │   ├── zed/                 # Zed Light + Dark local theme
+│   ├── opencode/            # OpenCode Light + Dark TUI theme
+│   ├── nvim/                # Neovim Light + Dark colorscheme
 │   ├── website/             # Website Light + Dark color theme
 │   └── image-generation/    # Illustration, avatar, and wallpaper prompts
 ├── img/
@@ -83,7 +85,7 @@ claude-cream/
 
 ### Design Tokens
 
-`tokens/tokens.json` is the single source of truth for Codex, Cursor / VS Code, Zed, Typora, Obsidian, and Ghostty themes.
+`tokens/tokens.json` is the single source of truth for Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, OpenCode, and Neovim themes.
 
 | Group | Description |
 |---|---|
@@ -93,7 +95,7 @@ claude-cream/
 | `spacing` / `rounded` | 8 spacing steps + 6 border-radius steps |
 | `syntax.*` | Five-mode syntax highlighting tokens |
 
-`tokens/tokens.json` drives Codex, Cursor / VS Code, Zed, Typora, Obsidian, and Ghostty through manual mapping. `themes/website` is a separately managed snapshot of the blog palette, while `themes/image-generation` turns that website language into reusable image-generation rules.
+`tokens/tokens.json` drives Codex, Cursor / VS Code, Zed, Typora, Obsidian, Ghostty, OpenCode, and Neovim through manual mapping. `themes/website` is a separately managed snapshot of the blog palette, while `themes/image-generation` turns that website language into reusable image-generation rules.
 
 ## Install
 
@@ -162,6 +164,25 @@ theme = light:claude-cream-light,dark:claude-cream-dark
 
 The optional [`config.ghostty`](themes/ghostty/config.ghostty) is a complete opinionated configuration. Review and merge the settings you want instead of replacing your existing config.
 
+### OpenCode
+
+```bash
+mkdir -p "$HOME/.config/opencode/themes"
+cp themes/opencode/claude-cream.json "$HOME/.config/opencode/themes/"
+```
+
+Then run `/themes` and choose `claude-cream`. See [`themes/opencode/README.md`](themes/opencode/README.md).
+
+### Neovim
+
+```bash
+mkdir -p "$HOME/.local/share/nvim/site/pack/claude-cream/start/claude-cream"
+cp -R themes/nvim/colors themes/nvim/lua \
+  "$HOME/.local/share/nvim/site/pack/claude-cream/start/claude-cream/"
+```
+
+Then run `:colorscheme claude-cream`. Windows path, Light / Dark variants, and LazyVim setup are in [`themes/nvim/README.md`](themes/nvim/README.md).
+
 ### Website
 
 Import the standalone color theme into a website stylesheet:
@@ -205,6 +226,8 @@ git diff --check
 | Ghostty | 1.0+ | macOS / Linux |
 | Cursor / VS Code | VS Code API 1.85+ | Shared theme extension |
 | Zed | Supports local themes schema v0.2.0 | Light + Dark in one theme family |
+| OpenCode | Custom JSON themes | Copy to `~/.config/opencode/themes/` |
+| Neovim | 0.9+ with `termguicolors` | Light + Dark Lua colorscheme |
 | Website theme | Modern browser | Requires `color-mix()` support |
 | macOS | 12+ | PingFang SC system font |
 

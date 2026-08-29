@@ -25,7 +25,7 @@ Claude Cream
 ### 项目定位
 
 ```text
-暖色调设计 token 与主题资产库，为 Codex、Cursor / VS Code、Zed、Typora、Obsidian、Ghostty、Website 与插画生成提供统一视觉语言。
+暖色调设计 token 与主题资产库，为 Codex、Cursor / VS Code、Zed、Typora、Obsidian、Ghostty、OpenCode、Neovim、Website 与插画生成提供统一视觉语言。
 ```
 
 ### 主要用户
@@ -37,7 +37,7 @@ Claude Cream
 ### 核心目标
 
 ```text
-以 tokens/tokens.json 为 Codex、Cursor / VS Code、Zed、编辑器与终端主题的单一真源，同时独立管理 Website 色板与图像生成规范。
+以 tokens/tokens.json 为 Codex、Cursor / VS Code、Zed、OpenCode、Neovim、编辑器与终端主题的单一真源，同时独立管理 Website 色板与图像生成规范。
 ```
 
 ### 非目标
@@ -75,7 +75,7 @@ Claude Cream
 ### UI 与样式
 
 ```text
-Design Tokens（JSON）→ Cursor / VS Code Theme JSON、Zed Theme JSON、Typora CSS、Obsidian CSS、Ghostty palette、CLI 配置模板
+Design Tokens（JSON）→ Cursor / VS Code Theme JSON、Zed Theme JSON、Typora CSS、Obsidian CSS、Ghostty palette、OpenCode Theme JSON、Neovim Lua、CLI 配置模板
 ```
 
 ### 状态管理
@@ -166,6 +166,15 @@ cp themes/zed/claude-cream.json "$HOME/.config/zed/themes/"
 
 # Zed 主题静态验证
 jq empty themes/zed/claude-cream.json
+
+# OpenCode
+mkdir -p "$HOME/.config/opencode/themes"
+cp themes/opencode/claude-cream.json "$HOME/.config/opencode/themes/"
+
+# Neovim
+mkdir -p "$HOME/.local/share/nvim/site/pack/claude-cream/start/claude-cream"
+cp -R themes/nvim/colors themes/nvim/lua \
+  "$HOME/.local/share/nvim/site/pack/claude-cream/start/claude-cream/"
 ```
 
 ### Lint
@@ -207,6 +216,8 @@ themes/
   codex/                  Codex Light/Dark 可导入主题与说明
   vscode/                 Cursor / VS Code 五模式主题、验证脚本与视觉 Fixtures
   zed/                    Zed Light/Dark 本地主题与安装说明
+  opencode/               OpenCode Light/Dark TUI 主题
+  nvim/                   Neovim Light/Dark Lua 配色方案
   typora/                 Typora Light/Dark 主题 CSS
   obsidian/               Obsidian 主题 + Style Settings
   ghostty/                Ghostty 主题与主配置
@@ -242,6 +253,8 @@ CLAUDE.md                 本仓 Claude Code 入口
 - `themes/codex/README.md`：Codex 主题导入、token 映射与兼容性说明
 - `themes/vscode/README.md`：Cursor / VS Code 主题、GitHub 下载与跨平台安装说明
 - `themes/zed/README.md`：Zed 本地主题安装、token 映射与验证说明
+- `themes/opencode/README.md`：OpenCode 主题安装与 token 映射
+- `themes/nvim/README.md`：Neovim 配色安装、LazyVim 配置与 token 映射
 - `tasks/specs/`：已确认需求
 - `tasks/plans/`：已确认实现计划
 
@@ -560,7 +573,7 @@ Plan 必须具体到可以执行和验证，避免使用「完善功能」「优
 - 中文优先：正文 PingFang SC，代码 JetBrains Mono。
 - 暖色优先：不做冷灰白工业风。
 - 精简自定义：只暴露页宽、字号、主色等真正常用项。
-- 修改共享 token 时，检查 Codex / Cursor / VS Code / Zed / Typora / Obsidian / Ghostty 是否同步。
+- 修改共享 token 时，检查 Codex / Cursor / VS Code / Zed / Typora / Obsidian / Ghostty / OpenCode / Neovim 是否同步。
 
 涉及视觉修改时，应尽量在目标客户端实际打开验证，而不是只依赖静态代码检查。
 
@@ -622,10 +635,11 @@ Plan 必须具体到可以执行和验证，避免使用「完善功能」「优
 2. 修改 Codex 时校验 `codex-theme-v1:` 前缀、JSON schema、Light/Dark variant 与 token 映射
 3. 修改 Cursor / VS Code 时运行 `themes/vscode/scripts/validate-theme.sh`
 4. 修改 Zed 时运行 `jq empty themes/zed/claude-cream.json`，并按官方 `themes/v0.2.0` schema 检查字段、Light/Dark 对称性与 token 映射
-5. 检查 Typora 主题文件名是否使用连字符
-6. 需要时导入或 `cp` 到目标客户端并目视核对
-7. `git diff --check`
-8. SVG 变更可用 `xmllint` 检查
+5. 修改 OpenCode / Neovim 时确认 JSON 或 Lua 能解析，且 primary / 语法 comment 仍映射自 tokens
+6. 检查 Typora 主题文件名是否使用连字符
+7. 需要时导入或 `cp` 到目标客户端并目视核对
+8. `git diff --check`
+9. SVG 变更可用 `xmllint` 检查
 
 ### Bug 修复
 
@@ -857,13 +871,13 @@ Git：
 1. 暖色优先，不做冷灰白
 2. 克制衬线：正文用 PingFang SC，避免跨平台衬线崩坏
 3. 本地优先：离线可用，不依赖付费字体或云服务
-4. 真源边界：`tokens/tokens.json` 驱动 Codex、Cursor / VS Code、Zed、Typora、Obsidian 与 Ghostty，Website 与 Image Generation 独立记录来源
+4. 真源边界：`tokens/tokens.json` 驱动 Codex、Cursor / VS Code、Zed、Typora、Obsidian、Ghostty、OpenCode 与 Neovim，Website 与 Image Generation 独立记录来源
 5. 精简自定义：只暴露页宽、字号、主色等关键项
 
 改色 / 字体 / 间距 / 圆角 / 语法高亮：
 
 1. 先改 `tokens/tokens.json`
-2. 再映射到 Codex、Cursor / VS Code、Zed、Typora、Obsidian、Ghostty 产物
+2. 再映射到 Codex、Cursor / VS Code、Zed、Typora、Obsidian、Ghostty、OpenCode、Neovim 产物
 3. 需要时更新 `tokens/README.md` 分组说明
 
 ### 21.2 各客户端安装路径
@@ -876,6 +890,8 @@ Git：
 | Ghostty | `cp` config 与 light/dark 主题到 `~/.config/ghostty/` |
 | Cursor / VS Code | 从 GitHub 下载后复制 `themes/vscode` 到对应 `extensions/kakarrot.claude-cream-<version>` |
 | Zed | `cp themes/zed/claude-cream.json` 到 `~/.config/zed/themes/` |
+| OpenCode | `cp themes/opencode/claude-cream.json` 到 `~/.config/opencode/themes/` |
+| Neovim | `cp -R themes/nvim/{colors,lua}` 到 `~/.local/share/nvim/site/pack/claude-cream/start/claude-cream/` |
 
 ### 21.3 Codex 主题约束
 
@@ -912,3 +928,20 @@ Git：
 - 编辑器表面映射自 `editor.light` / `editor.dark`，文本、边框和状态色映射自 `colors.light` / `colors.dark`。
 - 修改后至少运行 JSON 解析、schema 字段检查、Light / Dark 字段对称性、语法 token 映射检查和 `git diff --check`。
 - 无法实际打开 Zed 时，只能报告静态验证通过，导入与视觉验收保持未验证。
+
+### 21.7 OpenCode 主题约束
+
+- 本地主题保存为 `themes/opencode/claude-cream.json`，Light / Dark 写在同一个 JSON 的 `theme.*.light` / `theme.*.dark`。
+- 必须包含 OpenCode TUI 使用的基础色、Diff、Markdown 与 syntax 槽位。
+- `defs.light-primary` / `defs.dark-primary` 与 syntax comment 必须映射自 `tokens/tokens.json`。
+- 修改后运行 `python3 scripts/validate.py`。
+- 无法实际打开 OpenCode 时，只能报告静态验证通过。
+
+### 21.8 Neovim 主题约束
+
+- 本地配色保存在 `themes/nvim/`，通过 `colors/*.lua` 与 `lua/claude-cream/` 加载。
+- `palette.lua` 的 Light / Dark 必须映射自 `tokens/tokens.json` 与 Ghostty ANSI。
+- 提供 `claude-cream`（跟随 `vim.o.background`）、`claude-cream-light` 与 `claude-cream-dark`。
+- 不引入包管理器或 colorscheme 框架；安装靠复制到 Neovim packpath。
+- 修改后运行 `python3 scripts/validate.py`。
+- 无法实际打开 Neovim 时，只能报告静态验证通过。

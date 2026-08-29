@@ -1,5 +1,5 @@
 # macOS
-.DS_Store
+**/.DS_Store
 ._*
 .Spotlight-V100
 .Trashes
@@ -50,6 +50,9 @@ __pycache__/
 !/AGENTS.md
 !/CLAUDE.md
 !/.gitignore
+
+# 白名单解开目录后，仍递归排除 Finder 元数据
+**/.DS_Store
 
 # Agent 本地任务与规格（不入库）
 tasks/

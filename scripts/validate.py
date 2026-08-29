@@ -146,6 +146,18 @@ def validate_theme_mappings(tokens: dict[str, object]) -> None:
             f'{syntax["light"]["comment"]}ff',
             f'{syntax["dark"]["comment"]}ff',
         ],
+        "themes/opencode/claude-cream.json": [
+            colors["light"]["text-accent"],
+            colors["dark"]["primary-active"],
+            syntax["light"]["comment"],
+            syntax["dark"]["comment"],
+        ],
+        "themes/nvim/lua/claude-cream/palette.lua": [
+            colors["light"]["text-accent"],
+            colors["dark"]["primary"],
+            syntax["light"]["comment"],
+            syntax["dark"]["comment"],
+        ],
     }
     for path, values in mappings.items():
         for value in values:
@@ -192,6 +204,70 @@ def validate_typora_names() -> None:
             fail(f"{path.relative_to(ROOT)}: Typora filenames must use hyphens")
 
 
+def validate_opencode(tokens: dict[str, object]) -> None:
+    path = ROOT / "themes" / "opencode" / "claude-cream.json"
+    payload = load_json(path)
+    theme = payload["theme"]
+    required = {
+        "primary",
+        "secondary",
+        "accent",
+        "error",
+        "warning",
+        "success",
+        "info",
+        "text",
+        "textMuted",
+        "selectedListItemText",
+        "background",
+        "backgroundPanel",
+        "backgroundElement",
+        "backgroundMenu",
+        "border",
+        "syntaxComment",
+        "syntaxKeyword",
+        "markdownHeading",
+        "diffAdded",
+        "diffRemoved",
+    }
+    missing = required - set(theme)
+    if missing:
+        fail(f"{path.relative_to(ROOT)}: missing theme keys {sorted(missing)}")
+    if theme["primary"]["light"] != "light-primary":
+        fail(f"{path.relative_to(ROOT)}: primary.light must reference light-primary")
+    if theme["primary"]["dark"] != "dark-primary":
+        fail(f"{path.relative_to(ROOT)}: primary.dark must reference dark-primary")
+    defs = payload["defs"]
+    if defs["light-primary"] != tokens["colors"]["light"]["primary"]:
+        fail(f"{path.relative_to(ROOT)}: light-primary token drift")
+    if defs["dark-primary"] != tokens["colors"]["dark"]["primary"]:
+        fail(f"{path.relative_to(ROOT)}: dark-primary token drift")
+    if defs["light-syn-comment"] != tokens["syntax"]["light"]["comment"]:
+        fail(f"{path.relative_to(ROOT)}: light syntax comment token drift")
+    if defs["dark-syn-comment"] != tokens["syntax"]["dark"]["comment"]:
+        fail(f"{path.relative_to(ROOT)}: dark syntax comment token drift")
+
+
+def validate_nvim(tokens: dict[str, object]) -> None:
+    path = ROOT / "themes" / "nvim" / "lua" / "claude-cream" / "palette.lua"
+    content = path.read_text(encoding="utf-8")
+    required = [
+        tokens["colors"]["light"]["primary"],
+        tokens["colors"]["dark"]["primary"],
+        tokens["editor"]["light"]["canvas-default"],
+        tokens["editor"]["dark"]["canvas-default"],
+        tokens["syntax"]["light"]["comment"],
+        tokens["syntax"]["dark"]["comment"],
+    ]
+    for value in required:
+        if value not in content:
+            fail(f"{path.relative_to(ROOT)}: missing mapped value {value}")
+    colors_dir = ROOT / "themes" / "nvim" / "colors"
+    for name in ("claude-cream.lua", "claude-cream-light.lua", "claude-cream-dark.lua"):
+        if not (colors_dir / name).is_file():
+            fail(f"themes/nvim/colors/{name}: missing colorscheme entry")
+
+
 def main() -> None:
     tokens = load_json(TOKENS_PATH)
     validate_token_shape(tokens)
@@ -200,6 +276,8 @@ def main() -> None:
     validate_codex(tokens)
     validate_ghostty()
     validate_typora_names()
+    validate_opencode(tokens)
+    validate_nvim(tokens)
 
     subprocess.run(
         [str(ROOT / "themes" / "vscode" / "scripts" / "validate-theme.sh")],
